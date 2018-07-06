@@ -1,0 +1,5 @@
+traing loss 0.043
+val accuracy : 0.5 
+--> overfitting
+
+-->drop body

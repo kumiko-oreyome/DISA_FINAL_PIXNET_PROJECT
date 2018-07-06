@@ -1,0 +1,3 @@
+train:
+python main.py  train -r=<model_save_path> -tp=<training_data_path> -vp=<validation_data_path>
+python main.py  train -r=./save_train -tp=./small.txt -vp=./small.txt

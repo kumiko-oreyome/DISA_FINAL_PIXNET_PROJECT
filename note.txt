@@ -1,0 +1,63 @@
+目標 訓練一個macth model把blog文章和回覆做match評分
+
+資料集:
+	從課程給的pixnet的裡面的資料集 --> 存到DB內
+	問題 裡面有很多奇怪的character 不是中文英文數字的
+	-->先保留中文英文數字 換行 空白   ,其他的丟掉(含標點符號全丟)
+	-->用結巴斷詞
+	
+	型式
+	label,blog_id,response_id,title,text_body,response
+		-->text body和response是斷詞過後(用空白分開)的形式
+	label為那個response是不是這個blog_id的
+	
+	對某個blog
+		如果他沒有回覆 則不用他來產生response
+		每一個blog如果有N個回覆則另外產生N個假的
+	
+	產生大約五萬行這種資料train
+	200000筆dev
+	100000 eval
+
+
+	
+	
+產生dataset的 function data.py 裡面的109行 maker.generate_examples('./train.txt',800000)
+
+model
+(optional)
+因為body實在是有夠長
+後來想到把body切成50個字50個字這樣去看
+然後把那些last time step vector加起來
+
+
+retrieval 
+
+-->baseline 取出結果後
+-->排序 比較
+
+
+---
+結果
+	利用50000筆訓練資料產生的model,分類是否為這篇文章的reply的準確率
+	用body和tile
+	52
+	用title
+	51
+-->根本沒屌用
+
+
+架構 1
+n lstm 輸出output後直接加上一個preidcion layer和softmax
+
+架構 2
+seq2seq
+body可以用tf-idf之類的
+
+架構3
+SCN
+body要切....
+
+架構4
+簡單的model然後用tf-idf之類vector做相似度就好
+
